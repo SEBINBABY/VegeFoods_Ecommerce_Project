@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Details</title>
+</head>
+<body>
+<div class="col-lg-10 stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Blog Details</h4>
+                  <p class="card-description">
+                   Update your Blog here..
+                  </p>
+                  <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>DATE</th>
+                          <th>TITLE</th>
+                          <th>SHORT DESCRIPTION</th>
+                          <th>FULL DESCRIPTION</th>
+                          <th>IMAGE</th>
+                          <th>UPDATE</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for b in blog %}
+                        <tr class="table-info">
+                          <td>{{b.DATE}}</td>
+                          <td>{{b.TITLE}}</td>
+                          <td>{{b.SHORTDESC}}</td>
+                          <td>{{b.FULLDESC}}</td>
+                          <td>
+                            <img src="{{b.IMAGE.url}}" alt="Image" style="height:80px;width:80px;">
+                          </td>
+                          <td>
+                            <a href="{% url 'editblog' blogid=b.id %}">
+                             <button type="submit" class="btn btn-primary mr-2">EDIT</button>
+                            </a>
+                            <a href="{% url 'deleteblog' blogid=b.id %}">
+                              <button class="btn btn-danger">DELETE</button>
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == 'success' %}
+<script>
+  swal('{{i}}', '', 'success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+  swal('{{i}}', '', 'warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+  swal('{{i}}', '', 'error')
+</script>
+{% else %}
+<script>
+  swal('{{i}}', '', 'info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+</body>
+</html>
+{% endblock %}

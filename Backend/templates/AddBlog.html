@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Blog</title>
+</head>
+<body>
+<div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Blog</h4>
+                  <p class="card-description">
+                   Add Your Blogs here...
+                  </p>
+                  <form class="forms-sample" action="{% url 'Blogsave' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                    <div class="form-group">
+                      <label>Blog Date</label>
+                      <input type="date" class="form-control"  placeholder="Date" name="Date">
+                    </div>
+                    <div class="form-group">
+                      <label>Blog Title</label>
+                      <input type="text" class="form-control"  placeholder="Title" name="Title">
+                    </div>
+                    <div class="form-group">
+                      <label>Blog Short Description</label>
+                      <textarea class="form-control"  rows="4" name="ShortDescription"
+                                placeholder="Blog Short Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label>Blog Full Description</label>
+                      <textarea class="form-control"  rows="6" name="FullDescription"
+                                placeholder="Blog Full Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label>Upload Image</label>
+                        <div class="input-group col-xs-12">
+                            <input type="file" class="form-control file-upload-info" placeholder="Upload Image"
+                                   name="Image">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ {% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'warning' %}
+            <script>
+                swal('{{i}}', '', 'warning')
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}', '', 'error')
+            </script>
+        {% elif i.tags == 'success' %}
+            <script>
+                swal('{{i}}', '', 'success')
+            </script>
+        {% else %}
+            <script>
+              swal('{{i}}', '', 'info')
+            </script>
+        {% endif %}
+    {% endfor %}
+ {% endif %}
+
+</body>
+</html>
+{% endblock %}

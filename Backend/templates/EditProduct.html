@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Products</title>
+</head>
+<body>
+{% block content %}
+<div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Products</h4>
+                  <p class="card-description">
+                   Edit Your Products here
+                  </p>
+                  <form class="forms-sample" action="{% url 'updateproduct' proid=product.id %}" method="post"
+                        enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group">
+                    <label>Category Name</label>
+                    <select class="js-example-basic-single w-100 select2-hidden-accessible mb-3"
+                            aria-hidden="true" name="CatName">
+                     <option>{{product.CATEGORY}}</option>
+                      {% for cat in category %}
+                      <option>{{cat.NAME}}</option>
+                      {% endfor %}
+                    </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Product Name</label>
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Product Name"
+                             name="ProName" value="{{product.PRONAME}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Price</label>
+                      <input type="number" class="form-control" id="exampleInputName1" placeholder="Product Price"
+                             name="ProPrice" value="{{product.PROPRICE}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleTextarea1">Product Description</label>
+                      <textarea class="form-control" id="exampleTextarea1" rows="4" name="ProDesc">{{product.PRODESC}}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label>Upload Image</label>
+                        <div class="input-group col-xs-12">
+                            <img src="{{product.PROIMAGE.url}}" style="width:80px;height:80px;" alt="Image">
+                            <input type="file" class="form-control file-upload-info" placeholder="Upload Image"
+                                   name="ProImage">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">EDIT</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+</div>
+</body>
+{% endblock %}
+</html>

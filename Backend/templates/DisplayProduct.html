@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-lg-10 stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Product Details</h4>
+                  <p class="card-description">
+                   Update your Products here..
+                  </p>
+                  <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                           <th>CATEGORY NAME</th>
+                          <th>PRODUCT NAME</th>
+                          <th>PRICE</th>
+                          <th>DESCRIPTION</th>
+                          <th>IMAGE</th>
+                          <th>UPDATE PRODUCT</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in product %}
+                        <tr class="table-info">
+                          <td>{{i.CATEGORY}}</td>
+                          <td>{{i.PRONAME}}</td>
+                          <td>{{i.PROPRICE}}</td>
+                          <td>{{i.PRODESC}}</td>
+                          <td>
+                            <img src="{{i.PROIMAGE.url}}" alt="Image" style="height:80px;width:80px;">
+                          </td>
+                          <td>
+                            <a href="{% url 'editproduct' proid=i.id %}">
+                             <button type="submit" class="btn btn-primary mr-2">EDIT</button>
+                            </a>
+                            <a href="{% url 'deleteproduct' proid=i.id %}">
+                              <button class="btn btn-danger">DELETE</button>
+                            </a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == 'success' %}
+<script>
+  swal('{{i}}', '', 'success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+  swal('{{i}}', '', 'warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+  swal('{{i}}', '', 'error')
+</script>
+{% else %}
+<script>
+  swal('{{i}}', '', 'info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+</body>
+</html>
+{% endblock %}
